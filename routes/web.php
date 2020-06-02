@@ -59,12 +59,8 @@ Route::post('/payment', 'PaymentController@payment');
 Route::post('/checkout', 'PaymentController@checkout'); 
 Route::get('/ccavResponseHandler', 'PaymentController@ccavResponseHandler');
 
-Route::get('/product', 'ProductsController@index');
- 
-Route::get('cart', 'ProductsController@cart');
- 
-Route::get('add-to-cart/{id}', 'ProductsController@addToCart');
-
-Route::patch('update-cart', 'ProductsController@update');
- 
-Route::delete('remove-from-cart', 'ProductsController@remove');
+Route::get('/product', 'ProductsController@index')->middleware('auth');
+Route::get('cart', 'ProductsController@cart')->middleware('auth');
+Route::get('add-to-cart/{id}', 'ProductsController@addToCart')->middleware('auth');
+Route::patch('update-cart', 'ProductsController@update')->middleware('auth');
+Route::delete('remove-from-cart', 'ProductsController@remove')->middleware('auth');

@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use Auth;
+use Illuminate\Http\Request;
 
 class Handler extends ExceptionHandler
 {
@@ -69,13 +70,16 @@ class Handler extends ExceptionHandler
         if ($request->is('customer') || $request->is('customer/*')) {
             return redirect()->guest('/login/customer');
         }
-        if($exception instanceof \Illuminate\Auth\AuthenticationException )
+        if($exception instanceof \Illuminate\Auth\AuthenticationException)
         {
-            $message = array(
-                "error" => "invalid_credentials",
-                "message" => "The Authorization token is expired. Please login to continue."
-            );
-            return response($message, 401);
+            if(\Request::is('api*'))
+            {
+                $message = array(
+                    "error" => "invalid_credentials",
+                    "message" => "The Authorization token is expired. Please login to continue."
+                );
+                return response($message, 401);
+            } 
         }
         return redirect()->guest(route('login'));
     }
