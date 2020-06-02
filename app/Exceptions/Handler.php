@@ -81,6 +81,6 @@ class Handler extends ExceptionHandler
                 return response($message, 401);
             } 
         }
-        return redirect()->guest(route('login'));
+        return redirect('/login/customer');//redirect()->guest(route('login'));
     }
 }

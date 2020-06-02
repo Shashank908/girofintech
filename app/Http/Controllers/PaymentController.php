@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use Config;
 use App\Classes\Crypto;
@@ -10,6 +11,12 @@ class PaymentController extends Controller
 {
     public function showPaymentForm()
     {
+        // $user = Auth::check();//dd($user);
+        // if($user)
+        // {
+        //     return view('payment.payment');
+        // }
+        // return redirect()->intended('login/customer');
         return view('payment.payment');
     } 
 

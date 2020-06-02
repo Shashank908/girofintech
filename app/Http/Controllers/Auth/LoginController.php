@@ -118,6 +118,11 @@ class LoginController extends Controller
 
         if (Auth::guard('customer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) 
         {
+            //$cart = session()->get('cart'); dd($cart);
+            if(!empty($cart))
+            {
+                return redirect('/payment'); 
+            }
             return redirect()->intended('/customer');
         }
         return back()->withInput($request->only('email', 'remember'));

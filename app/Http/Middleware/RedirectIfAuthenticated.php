@@ -32,6 +32,11 @@ class RedirectIfAuthenticated
             return redirect('/support');
         }
         if ($guard == "customer" && Auth::guard($guard)->check()) {
+            // $cart = session()->get('cart');
+            // if(!empty($cart))
+            // {
+            //     return redirect('/payment'); 
+            // }
             return redirect('/customer');
         }
         if (Auth::guard($guard)->check()) {

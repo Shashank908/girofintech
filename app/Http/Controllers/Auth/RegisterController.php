@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Auth;
 use App\User;
 use App\Admin;
 use App\Marketing;
@@ -138,12 +139,21 @@ class RegisterController extends Controller
 
     protected function createCustomer(Request $request)
     {
+        //dd($cart = session()->get('cart'));
         $this->validator($request->all())->validate();
         $writer = Customer::create([
             'name' => $request['name'],
             'email' => $request['email'],
             'password' => Hash::make($request['password']),
         ]);
+        $cart = session()->get('cart');
+        if(!empty($cart))
+        {
+            if (Auth::guard('customer')->attempt(['email' => $request->email, 'password' => $request->password], $request->get('remember'))) 
+            {
+                return redirect()->intended('/payment');
+            }
+        }
         return redirect()->intended('login/customer');
     }
 }
